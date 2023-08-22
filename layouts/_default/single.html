@@ -65,6 +65,7 @@
     {{ end }}
 
     {{ .Content }}
+    {{ partial "disqus.html" . }}
   </article>
 
   {{- partial "comments.html" . -}}
