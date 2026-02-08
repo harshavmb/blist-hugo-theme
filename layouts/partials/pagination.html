@@ -1,3 +1,57 @@
 <div class="grid place-items-center mb-8">
-  {{ template "_internal/pagination.html" . }}
+  {{- $page := . -}}
+  {{- if gt $page.Paginator.TotalPages 1 -}}
+  <ul class="pagination flex flex-row gap-2 list-none">
+    {{- with $page.Paginator -}}
+      {{- $currentPageNumber := .PageNumber -}}
+
+      {{- with .First -}}
+        {{- if ne $currentPageNumber .PageNumber -}}
+        <li class="page-item">
+          <a href="{{ .URL }}" aria-label="First" class="page-link rounded px-3 py-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600" role="button">&laquo;&laquo;</a>
+        </li>
+        {{- end -}}
+      {{- end -}}
+
+      {{- with .Prev -}}
+        <li class="page-item">
+          <a href="{{ .URL }}" aria-label="Previous" class="page-link rounded px-3 py-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600" role="button">&laquo;</a>
+        </li>
+      {{- end -}}
+
+      {{- $slots := 5 -}}
+      {{- $start := math.Max 1 (sub .PageNumber (math.Floor (div $slots 2))) -}}
+      {{- $end := math.Min .TotalPages (sub (add $start $slots) 1) -}}
+      {{- if lt (add (sub $end $start) 1) $slots -}}
+        {{- $start = math.Max 1 (add (sub $end $slots) 1) -}}
+      {{- end -}}
+
+      {{- range $k := seq $start $end -}}
+        {{- if eq $.Paginator.PageNumber $k -}}
+        <li class="page-item active">
+          <a aria-current="page" aria-label="Page {{ $k }}" class="page-link rounded px-3 py-1 bg-blue-600 text-white" role="button">{{ $k }}</a>
+        </li>
+        {{- else -}}
+        <li class="page-item">
+          <a href="{{ (index $.Paginator.Pagers (sub $k 1)).URL }}" aria-label="Page {{ $k }}" class="page-link rounded px-3 py-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600" role="button">{{ $k }}</a>
+        </li>
+        {{- end -}}
+      {{- end -}}
+
+      {{- with .Next -}}
+        <li class="page-item">
+          <a href="{{ .URL }}" aria-label="Next" class="page-link rounded px-3 py-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600" role="button">&raquo;</a>
+        </li>
+      {{- end -}}
+
+      {{- with .Last -}}
+        {{- if ne $currentPageNumber .PageNumber -}}
+        <li class="page-item">
+          <a href="{{ .URL }}" aria-label="Last" class="page-link rounded px-3 py-1 bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600" role="button">&raquo;&raquo;</a>
+        </li>
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  </ul>
+  {{- end -}}
 </div>
