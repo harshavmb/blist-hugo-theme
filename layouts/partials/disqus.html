@@ -1,19 +1,25 @@
-<div id="disqus_thread"></div>
+{{- $disqusShortname := .Site.DisqusShortname | default "harshanu-space" -}}
+<div id="disqus-notice" class="dark:bg-gray-800 dark:text-gray-200" style="text-align: center; padding: 1.5rem; margin-top: 2rem; border: 1px solid #e0e0e0; border-radius: 8px;">
+  <p style="margin-bottom: 0.5rem; font-size: 1.1rem;">
+    💬 {{ i18n "show" }} {{ i18n "comments" }}
+  </p>
+  <p style="font-size: 0.85rem; color: #888; margin-bottom: 1rem;">
+    ⚠️ {{ i18n "disqusAdWarning" | default "Comments are powered by Disqus. You may see ads in the comments section." }}
+  </p>
+  <button id="disqus-load-btn" onclick="loadDisqusComments()" 
+     style="display: inline-block; padding: 0.6rem 1.5rem; background-color: #2e9fff; color: #fff; border: none; cursor: pointer; border-radius: 6px; font-weight: 500; font-size: 1rem;">
+    {{ i18n "show" }} {{ i18n "comments" }}
+  </button>
+</div>
+<div id="disqus_thread" style="display: none; margin-top: 1rem;"></div>
 <script>
-    /**
-    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
-    /*
-    var disqus_config = function () {
-    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-    };
-    */
-    (function() { // DON'T EDIT BELOW THIS LINE
+  function loadDisqusComments() {
+    document.getElementById('disqus-notice').style.display = 'none';
+    document.getElementById('disqus_thread').style.display = 'block';
     var d = document, s = d.createElement('script');
-    s.src = 'https://harshanu-space.disqus.com/embed.js';
+    s.src = 'https://{{ $disqusShortname }}.disqus.com/embed.js';
     s.setAttribute('data-timestamp', +new Date());
     (d.head || d.body).appendChild(s);
-    })();
+  }
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
