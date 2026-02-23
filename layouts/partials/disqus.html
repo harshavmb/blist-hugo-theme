@@ -1,4 +1,4 @@
-{{- $disqusShortname := .Site.DisqusShortname | default "harshanu-space" -}}
+{{- $disqusShortname := .Site.Config.Services.Disqus.Shortname | default "harshanu-space" -}}
 <div id="disqus-notice" class="dark:bg-gray-800 dark:text-gray-200" style="text-align: center; padding: 1.5rem; margin-top: 2rem; border: 1px solid #e0e0e0; border-radius: 8px;">
   <p style="margin-bottom: 0.5rem; font-size: 1.1rem;">
     💬 {{ i18n "show" }} {{ i18n "comments" }}
